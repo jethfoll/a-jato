@@ -2,7 +2,11 @@ package br.com.ajato.ajatosys.resources;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +27,18 @@ public class VeiculoResource {
 		return veiculoRespository.findAll();
 	}
 	
+	@GetMapping("/veiculo/{placa}")
+	public Veiculo listarVeiculo(@PathParam("placa") String placa) {
+		return veiculoRespository.findByPlaca(placa);
+	}
+	
 	@PostMapping("/veiculo")
 	public void adicionarVeiculo(@RequestBody Veiculo veiculo) {
 		veiculoRespository.save(veiculo);
+	}
+	
+	@DeleteMapping("/veiculo/{placa}")
+	public void deletarCarro(@PathParam("placa") String placa) {
+		veiculoRespository.deleteByPlaca(placa);
 	}
 }
